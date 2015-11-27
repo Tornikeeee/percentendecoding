@@ -98,23 +98,109 @@ var Url = {
  	},
 
  	// public method for URL decoding
-	 decode : function (string) {
+	 decode : function (text) {
+				if(Array.isArray(text)){
+					var masivi = [];
+					for(j=0;j<text.length();i++){
+						 var string = "";
+						 var i = 0;
+						 var c = c1 = c2 = 0;
+
+						while ( i < text[j].length ) {
+							 c = text[j].charCodeAt(i);
+							if (c < 128) {
+									string += text[j].fromCharCode(c);
+									i++;
+							} else if((c > 191) && (c < 224)) {
+								   c2 = text[j].charCodeAt(i+1);
+									string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+									i += 2;
+							} else {
+								   c2 = text[j].charCodeAt(i+1);
+									c3 = text[j].charCodeAt(i+2);
+									string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+								 i += 3;
+							}
+						}
+						masivi.push(string);
+					}
+					
+					for(i=0;i<masivi.length;i++){
+						console.log(unescape(masivi[i]));
+					}
+				}
+
+		if(typeof text=="object"){
+			var key = [];
+			var value =[];
+			var codi="";
+			
+			for (var item in text){
+				var result1 = "";
+				var result2 = "";
+				 var i = j = 0;
+				 var c = c2 = c3 = 0;
+				 var b = b2 = b3 = 0;
+
+				while ( i < item.length ) {
+					 c = item.charCodeAt(i);
+					if (c < 128) {
+							result1 += result1.fromCharCode(c);
+							i++;
+					} else if((c > 191) && (c < 224)) {
+						   c2 = item.charCodeAt(i+1);
+							result1 += result1.fromCharCode(((c & 31) << 6) | (c2 & 63));
+							i += 2;
+					} else {
+						   c2 = item.charCodeAt(i+1);
+							c3 = item.charCodeAt(i+2);
+							result1 += result1.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+						 i += 3;
+					}
+					key.push(result1);
+				}
+				
+				while ( j < property[item].length ) {
+					 b = property[item].charCodeAt(j);
+					if (b < 128) {
+							result2 += result2.fromCharCode(b);
+							j++;
+					} else if((b > 191) && (b < 224)) {
+						   b2 = property[item].charCodeAt(j+1);
+							result2 += result2.fromCharCode(((b & 31) << 6) | (b2 & 63));
+							j += 2;
+					} else {
+						   b2 = property[item].charCodeAt(j+1);
+							b3 = property[item].charCodeAt(j+2);
+							result2 += result2.fromCharCode(((b & 15) << 12) | ((b2 & 63) << 6) | (b3 & 63));
+						 j += 3;
+					}
+					value.push(result2);
+				}				
+								
+				for(i=0;i<key.length;i++){
+					codi=key[i]+"="+value[i]+"&";
+				}								
+			}
+			console.log(codi);
+		}
+				
 		  		 var string = "";
 				 var i = 0;
 				 var c = c1 = c2 = 0;
 
-				while ( i < utftext.length ) {
-					 c = utftext.charCodeAt(i);
+				while ( i < text.length ) {
+					 c = text.charCodeAt(i);
 					if (c < 128) {
 							string += String.fromCharCode(c);
 							i++;
 					} else if((c > 191) && (c < 224)) {
-						   c2 = utftext.charCodeAt(i+1);
+						   c2 = text.charCodeAt(i+1);
 							string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
 							i += 2;
 					} else {
-						   c2 = utftext.charCodeAt(i+1);
-							c3 = utftext.charCodeAt(i+2);
+						   c2 = text.charCodeAt(i+1);
+							c3 = text.charCodeAt(i+2);
 							string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
 						 i += 3;
 					}
