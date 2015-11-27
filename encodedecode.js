@@ -1,18 +1,11 @@
+var string = Url.encode("თორნიკე");
+Url.getencoding();
+
 var Url = {
 
  	// public method for URL encoding
- 	encode : function (string) {
- 		 return escape(this._utf8_encode(string));
- 	},
-
- 	// public method for URL decoding
-	 decode : function (string) {
- 	 	return this._utf8_decode(unescape(string));
- 	},
-
- 	// private method for UTF-8 encoding
- 	_utf8_encode : function (string) {
-  		string = string.replace(/\r\n/g,"\n");
+ 	encode : function (string) {  		
+		string = string.replace(/\r\n/g,"\n");
  	 	var utftext = "";
 
   		for (var n = 0; n < string.length; n++) {
@@ -29,31 +22,31 @@ var Url = {
  			}
  	}
 
-		return utftext;
-	},
+		console.log(utftext);
+ 	},
 
- 	// private method for UTF-8 decoding
- 	_utf8_decode : function (utftext) {
- 		 var string = "";
- 		 var i = 0;
- 		 var c = c1 = c2 = 0;
+ 	// public method for URL decoding
+	 decode : function (string) {
+		  		 var string = "";
+				 var i = 0;
+				 var c = c1 = c2 = 0;
 
-  		while ( i < utftext.length ) {
-  			 c = utftext.charCodeAt(i);
-   			if (c < 128) {
-    				string += String.fromCharCode(c);
-    				i++;
-  			 } else if((c > 191) && (c < 224)) {
- 				   c2 = utftext.charCodeAt(i+1);
-    				string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-    				i += 2;
-  			 } else {
- 				   c2 = utftext.charCodeAt(i+1);
-    				c3 = utftext.charCodeAt(i+2);
-    				string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-   				 i += 3;
- 			  }
-		  }
-		return string;
-	 }
+				while ( i < utftext.length ) {
+					 c = utftext.charCodeAt(i);
+					if (c < 128) {
+							string += String.fromCharCode(c);
+							i++;
+					 } else if((c > 191) && (c < 224)) {
+						   c2 = utftext.charCodeAt(i+1);
+							string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+							i += 2;
+					 } else {
+						   c2 = utftext.charCodeAt(i+1);
+							c3 = utftext.charCodeAt(i+2);
+							string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+						 i += 3;
+					  }
+				  }
+				console.log(unescape(string));
+ 	},
 }
